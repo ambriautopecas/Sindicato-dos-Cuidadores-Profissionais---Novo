@@ -1,0 +1,7 @@
+{
+  "name": "Remix: Sindicato dos Cuidadores Profissionais",
+  "description": "Representação, defesa de direitos e valorização dos cuidadores profissionais de Ribeirão Preto e região.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
