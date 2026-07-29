@@ -212,6 +212,301 @@ const cidadesRepresentadas = [
   "Porto Ferreira", "São João da Boa Vista", "Itapira", "Pirassununga"
 ];
 
+interface EstadoInfo {
+  sigla: string;
+  nome: string;
+  regiao: string;
+  d: string;
+  textX: number;
+  textY: number;
+  fontSize?: number;
+  isSede?: boolean;
+  status: 'ativa' | 'parcial' | 'sem';
+}
+
+const BRAZIL_STATES_LIST: EstadoInfo[] = [
+  // Norte
+  {
+    sigla: "AC",
+    nome: "Acre",
+    regiao: "Norte",
+    status: "sem",
+    d: "M 28 205 L 38 195 L 52 188 L 68 182 L 85 185 L 98 192 L 112 208 L 115 222 L 102 235 L 82 248 L 58 242 L 42 228 L 30 220 Z",
+    textX: 68,
+    textY: 215,
+    fontSize: 10
+  },
+  {
+    sigla: "AM",
+    nome: "Amazonas",
+    regiao: "Norte",
+    status: "parcial",
+    d: "M 32 112 L 48 92 L 68 82 L 98 78 L 122 52 L 135 48 L 138 58 L 152 68 L 175 78 L 198 75 L 228 62 L 245 72 L 252 98 L 242 128 L 228 158 L 205 182 L 178 208 L 142 205 L 112 208 L 98 192 L 85 185 L 68 182 L 52 188 L 38 195 L 28 205 L 20 185 L 18 155 L 22 130 Z",
+    textX: 135,
+    textY: 125,
+    fontSize: 13
+  },
+  {
+    sigla: "AP",
+    nome: "Amapá",
+    regiao: "Norte",
+    status: "sem",
+    d: "M 320 22 L 342 12 L 368 18 L 382 38 L 378 62 L 358 75 L 338 72 L 328 52 Z",
+    textX: 352,
+    textY: 45,
+    fontSize: 10
+  },
+  {
+    sigla: "PA",
+    nome: "Pará",
+    regiao: "Norte",
+    status: "parcial",
+    d: "M 228 62 L 245 72 L 252 98 L 242 128 L 228 158 L 205 182 L 235 182 L 252 202 L 278 212 L 305 218 L 332 205 L 362 198 L 372 168 L 398 138 L 408 108 L 398 82 L 378 62 L 358 75 L 338 72 L 328 52 L 320 22 L 285 45 L 252 52 L 228 62 Z",
+    textX: 308,
+    textY: 122,
+    fontSize: 13
+  },
+  {
+    sigla: "RO",
+    nome: "Rondônia",
+    regiao: "Norte",
+    status: "sem",
+    d: "M 112 208 L 142 205 L 178 208 L 192 232 L 185 262 L 168 282 L 142 288 L 125 272 L 112 245 L 115 222 Z",
+    textX: 148,
+    textY: 245,
+    fontSize: 11
+  },
+  {
+    sigla: "RR",
+    nome: "Roraima",
+    regiao: "Norte",
+    status: "sem",
+    d: "M 135 48 L 158 22 L 182 12 L 205 18 L 222 35 L 228 62 L 198 75 L 175 78 L 152 68 L 138 58 Z",
+    textX: 180,
+    textY: 48,
+    fontSize: 10
+  },
+  {
+    sigla: "TO",
+    nome: "Tocantins",
+    regiao: "Norte",
+    status: "sem",
+    d: "M 332 205 L 362 198 L 375 228 L 382 262 L 372 295 L 348 312 L 335 285 L 328 255 L 335 232 Z",
+    textX: 352,
+    textY: 255,
+    fontSize: 11
+  },
+
+  // Nordeste
+  {
+    sigla: "AL",
+    nome: "Alagoas",
+    regiao: "Nordeste",
+    status: "parcial",
+    d: "M 502 182 L 542 178 L 535 198 L 508 198 Z",
+    textX: 522,
+    textY: 190,
+    fontSize: 7
+  },
+  {
+    sigla: "BA",
+    nome: "Bahia",
+    regiao: "Nordeste",
+    status: "ativa",
+    d: "M 382 235 L 405 220 L 415 245 L 428 255 L 448 240 L 462 208 L 468 175 L 472 185 L 502 182 L 508 198 L 492 198 L 485 208 L 498 222 L 512 248 L 502 288 L 488 322 L 462 338 L 438 348 L 418 328 L 408 295 L 398 272 L 372 295 L 382 262 Z",
+    textX: 442,
+    textY: 275,
+    fontSize: 13
+  },
+  {
+    sigla: "CE",
+    nome: "Ceará",
+    regiao: "Nordeste",
+    status: "ativa",
+    d: "M 458 118 L 478 105 L 505 112 L 518 132 L 508 152 L 485 158 L 468 145 L 465 142 Z",
+    textX: 488,
+    textY: 132,
+    fontSize: 10
+  },
+  {
+    sigla: "MA",
+    nome: "Maranhão",
+    regiao: "Nordeste",
+    status: "parcial",
+    d: "M 362 198 L 372 168 L 398 138 L 408 108 L 428 98 L 448 112 L 452 138 L 442 165 L 428 198 L 405 220 L 382 235 L 375 228 Z",
+    textX: 410,
+    textY: 165,
+    fontSize: 11
+  },
+  {
+    sigla: "PB",
+    nome: "Paraíba",
+    regiao: "Nordeste",
+    status: "parcial",
+    d: "M 508 152 L 518 138 L 542 138 L 552 148 L 548 162 L 515 162 Z",
+    textX: 532,
+    textY: 152,
+    fontSize: 8
+  },
+  {
+    sigla: "PE",
+    nome: "Pernambuco",
+    regiao: "Nordeste",
+    status: "ativa",
+    d: "M 468 175 L 485 158 L 508 152 L 515 162 L 548 162 L 542 178 L 502 182 L 472 185 Z",
+    textX: 502,
+    textY: 172,
+    fontSize: 9
+  },
+  {
+    sigla: "PI",
+    nome: "Piauí",
+    regiao: "Nordeste",
+    status: "parcial",
+    d: "M 448 112 L 458 118 L 465 142 L 468 175 L 462 208 L 448 240 L 428 255 L 415 245 L 405 220 L 428 198 L 442 165 L 452 138 Z",
+    textX: 438,
+    textY: 180,
+    fontSize: 10
+  },
+  {
+    sigla: "RN",
+    nome: "Rio Grande do Norte",
+    regiao: "Nordeste",
+    status: "parcial",
+    d: "M 505 112 L 532 110 L 548 122 L 542 138 L 518 138 L 518 132 Z",
+    textX: 528,
+    textY: 125,
+    fontSize: 8
+  },
+  {
+    sigla: "SE",
+    nome: "Sergipe",
+    regiao: "Nordeste",
+    status: "parcial",
+    d: "M 492 198 L 508 198 L 518 215 L 498 222 L 485 208 Z",
+    textX: 502,
+    textY: 208,
+    fontSize: 7
+  },
+
+  // Centro-Oeste
+  {
+    sigla: "DF",
+    nome: "Distrito Federal",
+    regiao: "Centro-Oeste",
+    status: "ativa",
+    d: "M 370 318 L 382 318 L 382 328 L 370 328 Z",
+    textX: 376,
+    textY: 324,
+    fontSize: 8
+  },
+  {
+    sigla: "GO",
+    nome: "Goiás",
+    regiao: "Centro-Oeste",
+    status: "ativa",
+    d: "M 335 285 L 348 312 L 372 295 L 398 272 L 408 295 L 418 328 L 392 352 L 368 368 L 342 358 L 328 332 L 312 312 Z",
+    textX: 362,
+    textY: 325,
+    fontSize: 11
+  },
+  {
+    sigla: "MS",
+    nome: "Mato Grosso do Sul",
+    regiao: "Centro-Oeste",
+    status: "parcial",
+    d: "M 208 305 L 228 325 L 248 318 L 278 328 L 312 312 L 328 332 L 342 358 L 328 388 L 308 418 L 278 425 L 252 418 L 232 392 L 218 358 L 202 332 Z",
+    textX: 268,
+    textY: 370,
+    fontSize: 11
+  },
+  {
+    sigla: "MT",
+    nome: "Mato Grosso",
+    regiao: "Centro-Oeste",
+    status: "parcial",
+    d: "M 178 208 L 205 182 L 235 182 L 252 202 L 278 212 L 305 218 L 332 205 L 328 255 L 335 285 L 312 312 L 278 328 L 248 318 L 228 325 L 208 305 L 195 272 L 185 262 L 192 232 Z",
+    textX: 258,
+    textY: 260,
+    fontSize: 13
+  },
+
+  // Sudeste
+  {
+    sigla: "ES",
+    nome: "Espírito Santo",
+    regiao: "Sudeste",
+    status: "ativa",
+    d: "M 488 322 L 502 338 L 498 372 L 485 382 L 468 385 L 485 358 Z",
+    textX: 488,
+    textY: 358,
+    fontSize: 8
+  },
+  {
+    sigla: "MG",
+    nome: "Minas Gerais",
+    regiao: "Sudeste",
+    status: "ativa",
+    d: "M 368 368 L 392 352 L 418 328 L 438 348 L 462 338 L 488 322 L 485 358 L 468 385 L 442 412 L 412 422 L 382 415 L 358 398 L 342 358 Z",
+    textX: 418,
+    textY: 378,
+    fontSize: 13
+  },
+  {
+    sigla: "RJ",
+    nome: "Rio de Janeiro",
+    regiao: "Sudeste",
+    status: "ativa",
+    d: "M 442 412 L 468 385 L 485 382 L 478 408 L 452 428 L 428 425 Z",
+    textX: 458,
+    textY: 412,
+    fontSize: 9
+  },
+  {
+    sigla: "SP",
+    nome: "São Paulo",
+    regiao: "Sudeste",
+    status: "ativa",
+    isSede: true,
+    d: "M 308 418 L 328 388 L 342 358 L 358 398 L 382 415 L 412 422 L 428 425 L 418 442 L 388 452 L 352 458 L 322 448 L 298 438 Z",
+    textX: 358,
+    textY: 422,
+    fontSize: 13
+  },
+
+  // Sul
+  {
+    sigla: "PR",
+    nome: "Paraná",
+    regiao: "Sul",
+    status: "ativa",
+    d: "M 278 425 L 308 418 L 298 438 L 322 448 L 352 458 L 342 482 L 318 492 L 288 485 L 265 462 L 258 442 Z",
+    textX: 302,
+    textY: 458,
+    fontSize: 10
+  },
+  {
+    sigla: "RS",
+    nome: "Rio Grande do Sul",
+    regiao: "Sul",
+    status: "ativa",
+    d: "M 262 492 L 282 515 L 312 522 L 338 508 L 328 548 L 302 582 L 268 592 L 238 568 L 228 538 L 245 512 Z",
+    textX: 278,
+    textY: 548,
+    fontSize: 11
+  },
+  {
+    sigla: "SC",
+    nome: "Santa Catarina",
+    regiao: "Sul",
+    status: "ativa",
+    d: "M 265 462 L 288 485 L 318 492 L 342 482 L 338 508 L 312 522 L 282 515 L 262 492 Z",
+    textX: 298,
+    textY: 498,
+    fontSize: 9
+  }
+];
+
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showCookieBanner, setShowCookieBanner] = useState(true);
@@ -221,6 +516,12 @@ export default function App() {
   const [searchCidade, setSearchCidade] = useState("");
   const [searchResult, setSearchResult] = useState<'represented' | 'outside' | null>(null);
   const [searchedCityName, setSearchedCityName] = useState("");
+
+  // States for Base Territorial Map & Hover Tooltips
+  const [hoveredEstado, setHoveredEstado] = useState<EstadoInfo | null>(null);
+  const [selectedEstado, setSelectedEstado] = useState<EstadoInfo | null>(null);
+
+  const activeEstado = hoveredEstado || selectedEstado || BRAZIL_STATES_LIST.find(e => e.sigla === 'SP') || BRAZIL_STATES_LIST[0];
 
   const handleSearchCidade = (e?: FormEvent) => {
     if (e) e.preventDefault();
@@ -890,28 +1191,32 @@ Por favor, deem andamento à minha filiação. Obrigado!`;
             </div>
 
             {/* Search Box & Result Display */}
-            <div className="max-w-3xl mx-auto bg-white p-6 sm:p-10 rounded-3xl border border-slate-200/90 shadow-xl relative mb-16">
+            <div className="max-w-3xl mx-auto bg-white p-3.5 sm:p-6 md:p-10 rounded-3xl border border-slate-200/90 shadow-xl relative mb-16">
               <form onSubmit={handleSearchCidade} className="space-y-4">
-                <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">
+                <label className="text-[11px] sm:text-xs font-bold text-slate-500 uppercase tracking-wider block">
                   Consulta de Município Representado
                 </label>
-                <div className="flex flex-col sm:flex-row gap-3">
+                <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3">
                   <div className="relative flex-1">
-                    <Search className="size-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    <Search className="size-4 sm:size-5 text-slate-400 absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
                     <input
                       type="text"
                       value={searchCidade}
                       onChange={(e) => setSearchCidade(e.target.value)}
                       placeholder="Digite o nome da sua cidade"
-                      className="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-primary focus:bg-white transition-all"
+                      className="w-full pl-9 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-primary focus:bg-white transition-all"
                     />
                   </div>
                   <button
                     type="submit"
-                    className="px-7 py-3.5 bg-primary hover:bg-primary/95 text-white font-bold text-sm rounded-xl transition-all shadow-md shadow-primary/20 flex items-center justify-center gap-2 shrink-0 cursor-pointer"
+                    className={`w-full sm:w-auto px-4 sm:px-7 py-2.5 sm:py-3.5 bg-primary hover:bg-primary/95 text-white font-bold text-xs sm:text-sm rounded-xl transition-all flex items-center justify-center gap-2 shrink-0 cursor-pointer whitespace-nowrap ${
+                      searchCidade.trim().length > 0
+                        ? 'animate-pulse ring-4 ring-primary/40 shadow-lg shadow-primary/50 scale-[1.02]'
+                        : 'shadow-md shadow-primary/20'
+                    }`}
                   >
-                    <Search className="size-4" />
-                    Consultar Município
+                    <Search className="size-4 shrink-0" />
+                    <span>Consultar Município</span>
                   </button>
                 </div>
               </form>
@@ -924,14 +1229,14 @@ Por favor, deem andamento à minha filiação. Obrigado!`;
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="mt-6 p-6 bg-emerald-50 border-2 border-emerald-500 rounded-2xl shadow-sm flex items-start gap-4"
+                    className="mt-5 p-4 sm:p-6 bg-emerald-50 border-2 border-emerald-500 rounded-2xl shadow-sm flex items-start gap-3 sm:gap-4"
                   >
-                    <CheckCircle2 className="size-7 text-emerald-600 shrink-0 mt-0.5" />
+                    <CheckCircle2 className="size-6 sm:size-7 text-emerald-600 shrink-0 mt-0.5" />
                     <div>
-                      <h4 className="text-emerald-950 font-extrabold text-lg flex items-center gap-2">
+                      <h4 className="text-emerald-950 font-extrabold text-base sm:text-lg flex items-center gap-2">
                         ✓ Município Representado
                       </h4>
-                      <p className="text-emerald-900 font-bold text-sm mt-1">
+                      <p className="text-emerald-900 font-bold text-xs sm:text-sm mt-1">
                         Este município faz parte da atual base territorial do Sindicato.
                       </p>
                       {searchedCityName && (
@@ -949,14 +1254,14 @@ Por favor, deem andamento à minha filiação. Obrigado!`;
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="mt-6 p-6 bg-amber-50 border-2 border-amber-400 rounded-2xl shadow-sm flex items-start gap-4"
+                    className="mt-5 p-4 sm:p-6 bg-amber-50 border-2 border-amber-400 rounded-2xl shadow-sm flex items-start gap-3 sm:gap-4"
                   >
-                    <AlertTriangle className="size-7 text-amber-600 shrink-0 mt-0.5" />
+                    <AlertTriangle className="size-6 sm:size-7 text-amber-600 shrink-0 mt-0.5" />
                     <div>
-                      <h4 className="text-amber-950 font-extrabold text-lg flex items-center gap-2">
+                      <h4 className="text-amber-950 font-extrabold text-base sm:text-lg flex items-center gap-2">
                         Atenção
                       </h4>
-                      <p className="text-amber-900 font-bold text-sm mt-1">
+                      <p className="text-amber-900 font-bold text-xs sm:text-sm mt-1">
                         Atualmente este município não integra a base territorial do Sindicato.
                       </p>
                       <p className="text-xs text-amber-800 font-medium mt-2 leading-relaxed">
@@ -974,76 +1279,242 @@ Por favor, deem andamento à minha filiação. Obrigado!`;
             </div>
 
             {/* Map Illustration & Institutional Note */}
-            <div className="max-w-4xl mx-auto bg-white border border-slate-200 p-6 sm:p-8 rounded-3xl shadow-md text-center space-y-6">
-              <div className="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-slate-100 pb-6">
+            <div className="max-w-4xl mx-auto bg-white border border-slate-200 p-4 sm:p-8 rounded-3xl shadow-md text-center space-y-6">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6 border-b border-slate-100 pb-6">
                 <div className="text-left space-y-1">
-                  <span className="text-[11px] font-extrabold uppercase tracking-widest text-primary bg-primary/10 px-3 py-1 rounded-full">
+                  <span className="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest text-primary bg-primary/10 px-3 py-1 rounded-full">
                     Atuação de Âmbito Nacional & Estadual
                   </span>
-                  <h3 className="text-xl font-black text-slate-900">
+                  <h3 className="text-lg sm:text-xl font-black text-slate-900">
                     Abrangência Federativa e Estadual
                   </h3>
                   <p className="text-slate-600 text-xs font-medium">
-                    Representação e articulação institucional com cobertura em 26 Estados + Distrito Federal.
+                    Representação e articulação institucional com cobertura nos 26 Estados + Distrito Federal.
                   </p>
                 </div>
-                <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 px-4 py-2 rounded-xl text-xs font-bold text-slate-700">
+                <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 px-3.5 py-2 rounded-xl text-xs font-bold text-slate-700 shrink-0">
                   <Globe className="size-4 text-emerald-600" />
-                  <span>26 Estados + DF Destacados</span>
+                  <span>26 Estados + DF Mapeados</span>
                 </div>
               </div>
 
-              {/* Illustrative Map graphic of Brazil highlighting 26 states */}
-              <div className="relative py-6 px-4 bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl text-white overflow-hidden shadow-inner">
-                <div className="absolute inset-0 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:16px_16px] opacity-20 pointer-events-none"></div>
+              {/* Detailed Brazil Map with State Divisions, Tooltip & Side Panel */}
+              <div className="relative py-6 px-3 sm:px-6 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 rounded-2xl text-white overflow-hidden shadow-2xl border border-slate-800">
+                <div className="absolute inset-0 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:16px_16px] opacity-15 pointer-events-none"></div>
                 
-                <div className="relative z-10 flex flex-col md:flex-row items-center justify-around gap-6">
-                  {/* Brazil Map Vector Graphic */}
-                  <div className="w-full max-w-xs shrink-0 flex justify-center">
-                    <svg viewBox="0 0 500 500" className="w-52 h-52 drop-shadow-[0_0_15px_rgba(37,99,235,0.4)]" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M160 80 C180 60, 260 50, 320 70 C380 90, 420 130, 440 180 C460 230, 430 290, 390 330 C350 370, 300 420, 260 450 C230 430, 210 390, 200 360 C180 340, 150 320, 130 290 C110 260, 90 220, 80 180 C70 140, 130 100, 160 80 Z" fill="#1e293b" stroke="#3b82f6" strokeWidth="3" />
-                      {/* Highlighted SP region */}
-                      <circle cx="320" cy="310" r="14" fill="#10b981" className="animate-pulse" />
-                      <circle cx="320" cy="310" r="22" fill="#10b981" opacity="0.3" />
-                      <text x="320" y="314" textAnchor="middle" fill="white" fontSize="10" fontWeight="bold">SP</text>
+                {/* Active Tooltip Banner */}
+                <div className="relative z-20 mb-4 flex items-center justify-between bg-slate-800/90 backdrop-blur border border-slate-700/80 px-4 py-2.5 rounded-xl shadow-md">
+                  <div className="flex items-center gap-2">
+                    <span className="relative flex size-3">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full size-3 bg-sky-500"></span>
+                    </span>
+                    <span className="text-xs font-bold text-slate-300">Estado Selecionado / Hover:</span>
+                    <span className="text-sm font-extrabold text-white bg-sky-500/20 border border-sky-400/30 px-2.5 py-0.5 rounded-lg flex items-center gap-1.5">
+                      {activeEstado.nome} <span className="text-sky-300 font-mono">({activeEstado.sigla})</span>
+                    </span>
+                  </div>
+                  <span className="text-[11px] font-semibold text-slate-400 hidden sm:inline-block">
+                    Região {activeEstado.regiao}
+                  </span>
+                </div>
 
-                      {/* State markers for 26 states */}
-                      <circle cx="150" cy="140" r="6" fill="#3b82f6" />
-                      <circle cx="210" cy="120" r="6" fill="#3b82f6" />
-                      <circle cx="270" cy="110" r="6" fill="#3b82f6" />
-                      <circle cx="340" cy="130" r="6" fill="#3b82f6" />
-                      <circle cx="390" cy="170" r="6" fill="#3b82f6" />
-                      <circle cx="230" cy="190" r="6" fill="#3b82f6" />
-                      <circle cx="280" cy="200" r="6" fill="#3b82f6" />
-                      <circle cx="340" cy="220" r="6" fill="#3b82f6" />
-                      <circle cx="380" cy="240" r="6" fill="#3b82f6" />
-                      <circle cx="220" cy="260" r="6" fill="#3b82f6" />
-                      <circle cx="270" cy="270" r="6" fill="#3b82f6" />
-                      <circle cx="360" cy="280" r="6" fill="#3b82f6" />
-                      <circle cx="250" cy="330" r="6" fill="#3b82f6" />
-                      <circle cx="290" cy="360" r="6" fill="#3b82f6" />
-                      <circle cx="240" cy="390" r="6" fill="#3b82f6" />
-                      <circle cx="220" cy="420" r="6" fill="#3b82f6" />
-                    </svg>
+                <div className="relative z-10 flex flex-col lg:flex-row items-center lg:items-stretch justify-between gap-6 lg:gap-8">
+                  {/* Vector Map of Brazil with High-Definition State Polygons & Hover Glow */}
+                  <div className="w-full lg:w-[65%] shrink-0 flex flex-col items-center justify-center relative group min-h-[360px] sm:min-h-[420px]">
+                    {/* Discrete Subtle Blue Glow behind Map */}
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none -z-0">
+                      <div className="w-[80%] h-[80%] bg-sky-500/10 rounded-full blur-3xl"></div>
+                    </div>
+
+                    {/* Floating Tooltip following hovered state */}
+                    {hoveredEstado && (
+                      <div className="absolute top-2 left-1/2 -translate-x-1/2 z-30 pointer-events-none bg-slate-900/95 border border-sky-400/50 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-xl backdrop-blur flex items-center gap-2 animate-in fade-in zoom-in-95 duration-150">
+                        <span className={`size-2 rounded-full animate-pulse ${
+                          hoveredEstado.isSede
+                            ? 'bg-emerald-400'
+                            : hoveredEstado.status === 'ativa'
+                            ? 'bg-sky-400'
+                            : hoveredEstado.status === 'parcial'
+                            ? 'bg-amber-400'
+                            : 'bg-slate-400'
+                        }`}></span>
+                        <span>{hoveredEstado.nome} ({hoveredEstado.sigla})</span>
+                        <span className="text-[10px] text-slate-400 font-normal">| {hoveredEstado.regiao}</span>
+                      </div>
+                    )}
+
+                    <div className="w-full h-full flex items-center justify-center relative overflow-hidden p-2">
+                      <svg
+                        viewBox="0 0 580 620"
+                        className="w-full max-w-[480px] h-auto drop-shadow-[0_0_20px_rgba(56,189,248,0.2)] transition-transform duration-300"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g strokeLinejoin="round" strokeLinecap="round">
+                          {BRAZIL_STATES_LIST.map((est) => {
+                            const isHovered = hoveredEstado?.sigla === est.sigla;
+                            const isSelected = selectedEstado?.sigla === est.sigla;
+                            const isActive = isHovered || isSelected;
+
+                            let fill = "#334155"; // Default Sem Representação (Cinza)
+                            let stroke = "#475569";
+                            let strokeWidth = "1.2";
+
+                            if (est.isSede) {
+                              fill = isActive ? "#10b981" : "#059669"; // Verde
+                              stroke = "#34d399";
+                              strokeWidth = isActive ? "2.5" : "1.8";
+                            } else if (est.status === 'ativa') {
+                              fill = isActive ? "#38bdf8" : "#0284c7"; // Representação Ativa (Azul/Sky)
+                              stroke = "#7dd3fc";
+                              strokeWidth = isActive ? "2.5" : "1.5";
+                            } else if (est.status === 'parcial') {
+                              fill = isActive ? "#fbbf24" : "#d97706"; // Representação Parcial (Amarelo/Amber)
+                              stroke = "#fcd34d";
+                              strokeWidth = isActive ? "2.5" : "1.5";
+                            } else {
+                              fill = isActive ? "#64748b" : "#334155"; // Sem Representação (Cinza)
+                              stroke = "#94a3b8";
+                              strokeWidth = isActive ? "2" : "1.2";
+                            }
+
+                            return (
+                              <g
+                                key={est.sigla}
+                                className="cursor-pointer transition-all duration-200"
+                                onMouseEnter={() => setHoveredEstado(est)}
+                                onMouseLeave={() => setHoveredEstado(null)}
+                                onClick={() => setSelectedEstado(est)}
+                                style={{
+                                  transformBox: 'fill-box',
+                                  transformOrigin: 'center'
+                                }}
+                              >
+                                <path
+                                  d={est.d}
+                                  fill={fill}
+                                  stroke={stroke}
+                                  strokeWidth={strokeWidth}
+                                  className={`transition-all duration-200 ${
+                                    isActive
+                                      ? 'scale-[1.03] filter drop-shadow-[0_0_12px_rgba(56,189,248,0.6)] brightness-110'
+                                      : 'hover:scale-[1.03] hover:brightness-105'
+                                  }`}
+                                />
+                                <text
+                                  x={est.textX}
+                                  y={est.textY}
+                                  fill={isActive || est.isSede || est.status === 'ativa' ? "#ffffff" : "#cbd5e1"}
+                                  fontSize={est.fontSize || 10}
+                                  fontWeight={isActive || est.isSede ? "900" : "700"}
+                                  textAnchor="middle"
+                                  className="pointer-events-none select-none transition-all duration-200"
+                                >
+                                  {est.sigla}
+                                </text>
+                              </g>
+                            );
+                          })}
+                        </g>
+                      </svg>
+                    </div>
+                    
+                    {/* Official Institutional Legend with Small Circles */}
+                    <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 mt-4 pt-3 border-t border-slate-800/80 text-xs font-semibold text-slate-300 w-full">
+                      <div className="flex items-center gap-1.5">
+                        <span className="size-2.5 rounded-full bg-emerald-500 ring-2 ring-emerald-400/40"></span>
+                        <span className="font-bold text-white">Representação Ativa</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="size-2.5 rounded-full bg-amber-500 ring-2 ring-amber-400/40"></span>
+                        <span>Representação Parcial</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="size-2.5 rounded-full bg-slate-500 ring-2 ring-slate-400/40"></span>
+                        <span className="text-slate-400">Sem Representação</span>
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="text-left space-y-3 max-w-md">
-                    <h4 className="text-lg font-black text-white flex items-center gap-2">
-                      <span className="size-2 rounded-full bg-emerald-400 animate-ping"></span>
-                      26 Estados Federativos Abrangidos
-                    </h4>
-                    <p className="text-xs text-slate-300 leading-relaxed">
-                      O Sindicato dos Cuidadores Profissionais atua ativamente na defesa institucional, promovendo acordos coletivos, convenções trabalhistas, amparo jurídico e qualificação profissional no estado de São Paulo e articulado nacionalmente em todo o país.
-                    </p>
-                    <div className="flex flex-wrap gap-1.5 pt-1">
-                      {["SP", "RJ", "MG", "ES", "PR", "SC", "RS", "BA", "PE", "CE", "GO", "DF", "MT", "MS", "PA", "AM"].map((st) => (
-                        <span key={st} className="text-[10px] font-mono font-bold bg-slate-800 text-blue-300 border border-slate-700 px-2 py-0.5 rounded">
-                          {st}
-                        </span>
-                      ))}
-                      <span className="text-[10px] font-mono font-bold bg-blue-600/30 text-blue-200 border border-blue-500/40 px-2 py-0.5 rounded">
-                        +11 Estados
+                  {/* Side Detail Panel (Painel Lateral de Detalhes do Estado) */}
+                  <div className="w-full lg:w-[35%] flex flex-col justify-between space-y-4 bg-slate-900/80 border border-slate-800 p-5 rounded-2xl text-left shadow-lg">
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between gap-2 border-b border-slate-800 pb-3">
+                        <div className="flex items-center gap-2">
+                          <div className={`p-2 rounded-lg font-mono font-black text-sm ${activeEstado.isSede ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-sky-500/20 text-sky-300 border border-sky-500/30'}`}>
+                            {activeEstado.sigla}
+                          </div>
+                          <div>
+                            <h4 className="text-lg font-black text-white leading-tight">
+                              {activeEstado.nome}
+                            </h4>
+                            <p className="text-xs text-slate-400 font-medium">
+                              Região {activeEstado.regiao}
+                            </p>
+                          </div>
+                        </div>
+
+                        {activeEstado.isSede ? (
+                          <span className="text-[10px] font-extrabold uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-2.5 py-1 rounded-full flex items-center gap-1">
+                            ★ Sede Principal
+                          </span>
+                        ) : (
+                          <span className="text-[10px] font-extrabold uppercase bg-sky-500/20 text-sky-300 border border-sky-500/40 px-2.5 py-1 rounded-full flex items-center gap-1">
+                            ✓ Cobertura Ativa
+                          </span>
+                        )}
+                      </div>
+
+                      <p className="text-xs text-slate-300 leading-relaxed font-normal">
+                        {activeEstado.isSede ? (
+                          "Sede central do Sindicato dos Cuidadores Profissionais. Concentra a gestão nacional, diretoria executiva, suporte jurídico amplo e centro de atendimento ao associado."
+                        ) : (
+                          `O estado de ${activeEstado.nome} (${activeEstado.sigla}) possui representação institucional e amparo sindical normativo completo, com garantia das cláusulas e acordos da categoria.`
+                        )}
+                      </p>
+
+                      <div className="grid grid-cols-2 gap-2.5 pt-2">
+                        <div className="bg-slate-950/60 border border-slate-800 p-2.5 rounded-xl">
+                          <span className="block text-[10px] text-slate-400 font-semibold uppercase">Convenção Coletiva</span>
+                          <span className="text-xs font-bold text-emerald-400">Vigente / Aplicável</span>
+                        </div>
+                        <div className="bg-slate-950/60 border border-slate-800 p-2.5 rounded-xl">
+                          <span className="block text-[10px] text-slate-400 font-semibold uppercase">Atendimento Sindical</span>
+                          <span className="text-xs font-bold text-sky-400">Nacional & Estadual</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Interactive State Selector Grid */}
+                    <div className="pt-2 border-t border-slate-800">
+                      <span className="block text-[11px] font-bold text-slate-400 mb-2">
+                        Passe o mouse ou clique para selecionar qualquer estado:
                       </span>
+                      <div className="flex flex-wrap gap-1 max-h-28 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-slate-700">
+                        {BRAZIL_STATES_LIST.map((st) => {
+                          const isActive = activeEstado.sigla === st.sigla;
+                          return (
+                            <button
+                              key={st.sigla}
+                              type="button"
+                              onClick={() => setSelectedEstado(st)}
+                              onMouseEnter={() => setHoveredEstado(st)}
+                              onMouseLeave={() => setHoveredEstado(null)}
+                              className={`text-[10px] font-mono font-bold px-2 py-1 rounded transition-all cursor-pointer ${
+                                st.isSede
+                                  ? isActive
+                                    ? 'bg-emerald-500 text-slate-950 ring-2 ring-emerald-300'
+                                    : 'bg-emerald-900/60 text-emerald-300 border border-emerald-700'
+                                  : isActive
+                                  ? 'bg-sky-500 text-slate-950 ring-2 ring-sky-300'
+                                  : 'bg-slate-800/80 text-slate-300 border border-slate-700 hover:bg-slate-700 hover:text-white'
+                              }`}
+                            >
+                              {st.sigla}
+                            </button>
+                          );
+                        })}
+                      </div>
                     </div>
                   </div>
                 </div>
