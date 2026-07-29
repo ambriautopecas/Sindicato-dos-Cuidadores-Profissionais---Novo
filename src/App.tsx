@@ -41,7 +41,10 @@ import {
   Vote,
   FileBadge,
   UserPlus,
-  Landmark
+  Landmark,
+  Search,
+  AlertTriangle,
+  Globe
 } from "lucide-react";
 
 const SERVICES = [
@@ -121,10 +124,125 @@ const Logo = ({ className = "size-10", iconSize = "size-6" }: { className?: stri
   </div>
 );
 
+const cidadesTemporariamenteFora = [
+  "Alvinlândia",
+  "Anhumas",
+  "Apiaí",
+  "Araçoiaba da Serra",
+  "Barão de Antonina",
+  "Barra do Turvo",
+  "Barueri",
+  "Bom Jesus dos Perdões",
+  "Borá",
+  "Caieiras",
+  "Campos Novos Paulista",
+  "Capão Bonito",
+  "Carapicuíba",
+  "Chavantes",
+  "Coronel Macedo",
+  "Cotia",
+  "Cruzália",
+  "Diadema",
+  "Embu das Artes",
+  "Embu-Guaçu",
+  "Fartura",
+  "Ferraz de Vasconcelos",
+  "Florínia",
+  "Franco da Rocha",
+  "Guapiara",
+  "Guarulhos",
+  "Ibiúna",
+  "Iepê",
+  "Iporanga",
+  "Itaberá",
+  "Itaí",
+  "Itapecerica da Serra",
+  "Itapeva",
+  "Itapevi",
+  "Itaporanga",
+  "Itaquaquecetuba",
+  "Itararé",
+  "Jandira",
+  "João Ramalho",
+  "Lupércio",
+  "Lutécia",
+  "Mairiporã",
+  "Maracaí",
+  "Mauá",
+  "Mogi das Cruzes",
+  "Nazaré Paulista",
+  "Ocauçu",
+  "Osasco",
+  "Oscar Bressane",
+  "Ourinhos",
+  "Pedra Bela",
+  "Pirapora do Bom Jesus",
+  "Platina",
+  "Poá",
+  "Ribeira",
+  "Ribeirão do Sul",
+  "Ribeirão Pires",
+  "Rio Grande da Serra",
+  "Salto Grande",
+  "Santana de Parnaíba",
+  "Santo André",
+  "São Bernardo do Campo",
+  "São Caetano do Sul",
+  "São Paulo",
+  "São Pedro do Turvo",
+  "Suzano",
+  "Taboão da Serra",
+  "Taguaí",
+  "Taquarituba",
+  "Taubaté",
+  "Timburi",
+  "Ubirajara",
+  "Vargem Grande Paulista"
+];
+
+const cidadesRepresentadas = [
+  "Ribeirão Preto", "Campinas", "Santos", "Sorocaba", "Bauru", "São José dos Campos", "Franca",
+  "Araraquara", "Piracicaba", "Presidente Prudente", "Marília", "São Carlos", "Americana", "Limeira",
+  "Rio Claro", "Jundiaí", "Araçatuba", "São José do Rio Preto", "Jaboticabal", "Sertãozinho",
+  "Catanduva", "Barretos", "Guaratinguetá", "Taquaritinga", "Bebedouro", "Assis", "Lins",
+  "Votuporanga", "Jaú", "Botucatu", "Avaré", "Arujá", "Atibaia", "Bragança Paulista",
+  "Caraguatatuba", "Cubatão", "Guarujá", "Indaiatuba", "Itu", "Jacareí", "Mogi Guaçu",
+  "Mogi Mirim", "Praia Grande", "Salto", "São Vicente", "Sumaré", "Ubatuba", "Valinhos",
+  "Vinhedo", "Votorantim", "Leme", "Batatais", "Mococa", "Monte Alto", "Matão", "Américo Brasiliense",
+  "Porto Ferreira", "São João da Boa Vista", "Itapira", "Pirassununga"
+];
+
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showCookieBanner, setShowCookieBanner] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
+
+  // States for Base Territorial Search
+  const [searchCidade, setSearchCidade] = useState("");
+  const [searchResult, setSearchResult] = useState<'represented' | 'outside' | null>(null);
+  const [searchedCityName, setSearchedCityName] = useState("");
+
+  const handleSearchCidade = (e?: FormEvent) => {
+    if (e) e.preventDefault();
+    if (!searchCidade.trim()) return;
+
+    const rawQuery = searchCidade.trim();
+    const normalizedQuery = rawQuery
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase();
+
+    const isFora = cidadesTemporariamenteFora.some((c) =>
+      c.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase() === normalizedQuery
+    );
+
+    setSearchedCityName(rawQuery);
+    if (isFora) {
+      setSearchResult("outside");
+    } else {
+      setSearchResult("represented");
+    }
+  };
 
   // States for Simulator
   const [simCategory, setSimCategory] = useState("cuidador");
@@ -256,12 +374,13 @@ Por favor, deem andamento à minha filiação. Obrigado!`;
               </span>
             </div>
             
-            <nav className="hidden lg:flex items-center gap-5 xl:gap-6">
+            <nav className="hidden lg:flex items-center gap-4 xl:gap-5">
               {[
                 { name: "Início", href: "#inicio" },
                 { name: "Quem Somos", href: "#quem-somos" },
                 { name: "Objetivos", href: "#objetivos" },
                 { name: "Quem Representamos", href: "#quem-representamos" },
+                { name: "Base Territorial", href: "#base-territorial" },
                 { name: "Nossa Atuação", href: "#nossa-atuacao" },
                 { name: "Benefícios", href: "#beneficios" },
                 { name: "Convenções", href: "#convencoes" },
@@ -312,6 +431,7 @@ Por favor, deem andamento à minha filiação. Obrigado!`;
               { name: "Quem Somos", href: "#quem-somos" },
               { name: "Objetivos", href: "#objetivos" },
               { name: "Quem Representamos", href: "#quem-representamos" },
+              { name: "Base Territorial", href: "#base-territorial" },
               { name: "Nossa Atuação", href: "#nossa-atuacao" },
               { name: "Benefícios", href: "#beneficios" },
               { name: "Convenções (Acordo Col.)", href: "#convencoes" },
@@ -744,6 +864,195 @@ Por favor, deem andamento à minha filiação. Obrigado!`;
                   })}
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Base Territorial */}
+        <section id="base-territorial" className="py-24 bg-gradient-to-b from-slate-50 to-slate-100 relative overflow-hidden border-b border-slate-200">
+          <div className="absolute top-1/4 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+          <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Section Header */}
+            <div className="max-w-3xl mx-auto text-center mb-16">
+              <span className="inline-flex items-center gap-2 bg-primary/10 text-primary-dark px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-4 border border-primary/20">
+                <MapPin className="size-3.5" />
+                Abrangência Geográfica
+              </span>
+              <h2 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight mb-6">
+                Base Territorial de Representação Sindical
+              </h2>
+              <p className="text-slate-600 text-base md:text-lg leading-relaxed font-medium">
+                Consulte abaixo se o seu município faz parte da atual base territorial do Sindicato dos Cuidadores Profissionais.
+              </p>
+              <div className="w-20 h-1.5 bg-primary rounded-full mx-auto mt-6"></div>
+            </div>
+
+            {/* Search Box & Result Display */}
+            <div className="max-w-3xl mx-auto bg-white p-6 sm:p-10 rounded-3xl border border-slate-200/90 shadow-xl relative mb-16">
+              <form onSubmit={handleSearchCidade} className="space-y-4">
+                <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">
+                  Consulta de Município Representado
+                </label>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <div className="relative flex-1">
+                    <Search className="size-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    <input
+                      type="text"
+                      value={searchCidade}
+                      onChange={(e) => setSearchCidade(e.target.value)}
+                      placeholder="Digite o nome da sua cidade"
+                      className="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-primary focus:bg-white transition-all"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    className="px-7 py-3.5 bg-primary hover:bg-primary/95 text-white font-bold text-sm rounded-xl transition-all shadow-md shadow-primary/20 flex items-center justify-center gap-2 shrink-0 cursor-pointer"
+                  >
+                    <Search className="size-4" />
+                    Consultar Município
+                  </button>
+                </div>
+              </form>
+
+              {/* Result Display Cards */}
+              <AnimatePresence mode="wait">
+                {searchResult === 'represented' && (
+                  <motion.div
+                    key="represented"
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="mt-6 p-6 bg-emerald-50 border-2 border-emerald-500 rounded-2xl shadow-sm flex items-start gap-4"
+                  >
+                    <CheckCircle2 className="size-7 text-emerald-600 shrink-0 mt-0.5" />
+                    <div>
+                      <h4 className="text-emerald-950 font-extrabold text-lg flex items-center gap-2">
+                        ✓ Município Representado
+                      </h4>
+                      <p className="text-emerald-900 font-bold text-sm mt-1">
+                        Este município faz parte da atual base territorial do Sindicato.
+                      </p>
+                      {searchedCityName && (
+                        <p className="text-xs text-emerald-800 font-medium mt-2">
+                          Cidade consultada: <span className="font-bold underline">{searchedCityName}</span>
+                        </p>
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+
+                {searchResult === 'outside' && (
+                  <motion.div
+                    key="outside"
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="mt-6 p-6 bg-amber-50 border-2 border-amber-400 rounded-2xl shadow-sm flex items-start gap-4"
+                  >
+                    <AlertTriangle className="size-7 text-amber-600 shrink-0 mt-0.5" />
+                    <div>
+                      <h4 className="text-amber-950 font-extrabold text-lg flex items-center gap-2">
+                        Atenção
+                      </h4>
+                      <p className="text-amber-900 font-bold text-sm mt-1">
+                        Atualmente este município não integra a base territorial do Sindicato.
+                      </p>
+                      <p className="text-xs text-amber-800 font-medium mt-2 leading-relaxed">
+                        Essa condição poderá ser alterada futuramente conforme alterações administrativas e estatutárias.
+                      </p>
+                      {searchedCityName && (
+                        <p className="text-xs text-amber-900/80 font-medium mt-2 border-t border-amber-200/80 pt-2">
+                          Cidade consultada: <span className="font-bold">{searchedCityName}</span>
+                        </p>
+                      )}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Map Illustration & Institutional Note */}
+            <div className="max-w-4xl mx-auto bg-white border border-slate-200 p-6 sm:p-8 rounded-3xl shadow-md text-center space-y-6">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-slate-100 pb-6">
+                <div className="text-left space-y-1">
+                  <span className="text-[11px] font-extrabold uppercase tracking-widest text-primary bg-primary/10 px-3 py-1 rounded-full">
+                    Atuação de Âmbito Nacional & Estadual
+                  </span>
+                  <h3 className="text-xl font-black text-slate-900">
+                    Abrangência Federativa e Estadual
+                  </h3>
+                  <p className="text-slate-600 text-xs font-medium">
+                    Representação e articulação institucional com cobertura em 26 Estados + Distrito Federal.
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 px-4 py-2 rounded-xl text-xs font-bold text-slate-700">
+                  <Globe className="size-4 text-emerald-600" />
+                  <span>26 Estados + DF Destacados</span>
+                </div>
+              </div>
+
+              {/* Illustrative Map graphic of Brazil highlighting 26 states */}
+              <div className="relative py-6 px-4 bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl text-white overflow-hidden shadow-inner">
+                <div className="absolute inset-0 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:16px_16px] opacity-20 pointer-events-none"></div>
+                
+                <div className="relative z-10 flex flex-col md:flex-row items-center justify-around gap-6">
+                  {/* Brazil Map Vector Graphic */}
+                  <div className="w-full max-w-xs shrink-0 flex justify-center">
+                    <svg viewBox="0 0 500 500" className="w-52 h-52 drop-shadow-[0_0_15px_rgba(37,99,235,0.4)]" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M160 80 C180 60, 260 50, 320 70 C380 90, 420 130, 440 180 C460 230, 430 290, 390 330 C350 370, 300 420, 260 450 C230 430, 210 390, 200 360 C180 340, 150 320, 130 290 C110 260, 90 220, 80 180 C70 140, 130 100, 160 80 Z" fill="#1e293b" stroke="#3b82f6" strokeWidth="3" />
+                      {/* Highlighted SP region */}
+                      <circle cx="320" cy="310" r="14" fill="#10b981" className="animate-pulse" />
+                      <circle cx="320" cy="310" r="22" fill="#10b981" opacity="0.3" />
+                      <text x="320" y="314" textAnchor="middle" fill="white" fontSize="10" fontWeight="bold">SP</text>
+
+                      {/* State markers for 26 states */}
+                      <circle cx="150" cy="140" r="6" fill="#3b82f6" />
+                      <circle cx="210" cy="120" r="6" fill="#3b82f6" />
+                      <circle cx="270" cy="110" r="6" fill="#3b82f6" />
+                      <circle cx="340" cy="130" r="6" fill="#3b82f6" />
+                      <circle cx="390" cy="170" r="6" fill="#3b82f6" />
+                      <circle cx="230" cy="190" r="6" fill="#3b82f6" />
+                      <circle cx="280" cy="200" r="6" fill="#3b82f6" />
+                      <circle cx="340" cy="220" r="6" fill="#3b82f6" />
+                      <circle cx="380" cy="240" r="6" fill="#3b82f6" />
+                      <circle cx="220" cy="260" r="6" fill="#3b82f6" />
+                      <circle cx="270" cy="270" r="6" fill="#3b82f6" />
+                      <circle cx="360" cy="280" r="6" fill="#3b82f6" />
+                      <circle cx="250" cy="330" r="6" fill="#3b82f6" />
+                      <circle cx="290" cy="360" r="6" fill="#3b82f6" />
+                      <circle cx="240" cy="390" r="6" fill="#3b82f6" />
+                      <circle cx="220" cy="420" r="6" fill="#3b82f6" />
+                    </svg>
+                  </div>
+
+                  <div className="text-left space-y-3 max-w-md">
+                    <h4 className="text-lg font-black text-white flex items-center gap-2">
+                      <span className="size-2 rounded-full bg-emerald-400 animate-ping"></span>
+                      26 Estados Federativos Abrangidos
+                    </h4>
+                    <p className="text-xs text-slate-300 leading-relaxed">
+                      O Sindicato dos Cuidadores Profissionais atua ativamente na defesa institucional, promovendo acordos coletivos, convenções trabalhistas, amparo jurídico e qualificação profissional no estado de São Paulo e articulado nacionalmente em todo o país.
+                    </p>
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                      {["SP", "RJ", "MG", "ES", "PR", "SC", "RS", "BA", "PE", "CE", "GO", "DF", "MT", "MS", "PA", "AM"].map((st) => (
+                        <span key={st} className="text-[10px] font-mono font-bold bg-slate-800 text-blue-300 border border-slate-700 px-2 py-0.5 rounded">
+                          {st}
+                        </span>
+                      ))}
+                      <span className="text-[10px] font-mono font-bold bg-blue-600/30 text-blue-200 border border-blue-500/40 px-2 py-0.5 rounded">
+                        +11 Estados
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Exact required institutional note */}
+              <p className="text-xs text-slate-500 font-semibold italic border-t border-slate-100 pt-4">
+                "A base territorial do Sindicato poderá sofrer alterações conforme atualizações estatutárias e administrativas."
+              </p>
             </div>
           </div>
         </section>
